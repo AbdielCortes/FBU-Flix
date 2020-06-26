@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Movies View Controller-->
+        <!--Movies-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MoviesViewController" sceneMemberID="viewController">
@@ -52,6 +52,7 @@
                                             <outlet property="movieDescriptionLabel" destination="5ds-28-g6z" id="rBN-7B-dzZ"/>
                                             <outlet property="moviePosterView" destination="kR8-C4-A7z" id="Ubk-Nh-F0l"/>
                                             <outlet property="movieTitleLabel" destination="SHH-JK-0d1" id="xjd-9s-T6h"/>
+                                            <segue destination="vCB-gq-3Zq" kind="show" id="PpX-JO-0QV"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -60,14 +61,78 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="APF-lZ-Kwe"/>
                     </view>
-                    <navigationItem key="navigationItem" id="I34-Dl-A7a"/>
+                    <navigationItem key="navigationItem" title="Movies" id="I34-Dl-A7a"/>
                     <connections>
                         <outlet property="tableView" destination="CtQ-1E-8Cu" id="MdH-5v-evw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1042.0289855072465" y="91.741071428571431"/>
+            <point key="canvasLocation" x="971" y="92"/>
+        </scene>
+        <!--Details View Controller-->
+        <scene sceneID="tLP-GW-fqE">
+            <objects>
+                <viewController id="vCB-gq-3Zq" customClass="DetailsViewController" sceneMemberID="viewController">
+                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" id="X5X-u2-j3v">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="beo-2E-FLy">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kuV-ws-zpz">
+                                <rect key="frame" x="20" y="179" width="98" height="147"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Movie TItle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VtE-0m-Rjf">
+                                <rect key="frame" x="126" y="247" width="268" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Movie Premiere Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VgP-9h-Y25">
+                                <rect key="frame" x="126" y="276" width="268" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Movie Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i5c-Sz-ZAs">
+                                <rect key="frame" x="20" y="346" width="374" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Movie Rating" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zM2-uS-cXH">
+                                <rect key="frame" x="126" y="305" width="268" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="axl-IR-2bK"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="7q0-1h-1ss"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="Z1E-bT-p1Z"/>
+                    </scrollView>
+                    <navigationItem key="navigationItem" id="4IM-mJ-67H"/>
+                    <connections>
+                        <outlet property="backdropView" destination="beo-2E-FLy" id="h0c-k0-rmE"/>
+                        <outlet property="movieDescriptionLabel" destination="i5c-Sz-ZAs" id="Q2u-14-Lw6"/>
+                        <outlet property="moviePremiereDateLabel" destination="VgP-9h-Y25" id="Zmm-7v-t8k"/>
+                        <outlet property="movieRating" destination="zM2-uS-cXH" id="6EO-uh-dxt"/>
+                        <outlet property="movieTitleLabel" destination="VtE-0m-Rjf" id="1jt-wO-ygf"/>
+                        <outlet property="posterView" destination="kuV-ws-zpz" id="LFN-Da-hhk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HA4-7A-A9L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1779.7101449275365" y="91.741071428571431"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ktL-DA-lJ4">

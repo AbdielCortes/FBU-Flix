@@ -8,6 +8,7 @@
 
 #import "MoviesViewController.h"
 #import "MovieCell.h"
+#import "DetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -23,6 +24,7 @@
 @implementation MoviesViewController
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -33,8 +35,6 @@
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     //[self.tableView addSubview:self.refreshControl];
-    
-    [super viewDidLoad];
 }
 
 - (void)fetchMovies {
@@ -82,14 +82,19 @@
     return cell;
 }
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    UITableViewCell *tappedCell = sender;
+    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:tappedCell];
+    [self fetchMovies];
+    NSDictionary *movie = self.movies[cellIndexPath.row];
+    
+    DetailsViewController *detailsViewController = [segue destinationViewController];
+    detailsViewController.movie = movie;
 }
-*/
 
 @end
