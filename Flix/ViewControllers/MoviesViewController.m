@@ -19,6 +19,8 @@
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
 @end
 
 @implementation MoviesViewController
@@ -29,7 +31,9 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    [self.activityIndicator startAnimating];
     [self fetchMovies];
+    [self.activityIndicator stopAnimating];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
@@ -43,6 +47,24 @@
         NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
         NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                if (error != nil) {
+                   UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to Load Movies" message:@"The internet connection appears to be offline." preferredStyle:(UIAlertControllerStyleAlert)];
+                    
+                   // optional cancel action
+//                   UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+//                        handler:^(UIAlertAction * _Nonnull action) { }];
+//                   // add the cancel action to the alertController
+//                   [alert addAction:cancelAction];
+
+                   // create an reload action
+                   UIAlertAction *reloadAction = [UIAlertAction actionWithTitle:@"Reload" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                       [self fetchMovies];
+                   }];
+                   // add the reload action to the alert controller
+                   [alert addAction:reloadAction];
+                   
+                   // show alert box
+                   [self presentViewController:alert animated:YES completion:^{ }];
+                   
                    NSLog(@"%@", [error localizedDescription]);
                }
                else {
@@ -90,7 +112,6 @@
     // Pass the selected object to the new view controller.
     UITableViewCell *tappedCell = sender;
     NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:tappedCell];
-    [self fetchMovies];
     NSDictionary *movie = self.movies[cellIndexPath.row];
     
     DetailsViewController *detailsViewController = [segue destinationViewController];

@@ -42,8 +42,12 @@
     
     self.movieTitleLabel.text = self.movie[@"title"];
     [self.movieTitleLabel sizeToFit];
+    
     self.moviePremiereDateLabel.text = self.movie[@"release_date"];
-    self.movieRating.text = [NSString stringWithFormat:@"Rated %@/10", self.movie[@"vote_average"]];
+    
+    double voteAverage = [self.movie[@"vote_average"] doubleValue];
+    self.movieRating.text = [NSString stringWithFormat:@"Rated %.1f/10", voteAverage];
+    
     self.movieDescriptionLabel.text = self.movie[@"overview"];
     [self.movieDescriptionLabel sizeToFit];
 }
