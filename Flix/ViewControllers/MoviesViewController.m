@@ -7,6 +7,8 @@
 //
 
 #import "MoviesViewController.h"
+#import "MovieCell.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -53,10 +55,18 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
+    MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
+    
     NSDictionary *movie = self.movies[indexPath.row];
-    //cell.textLabel.text = movie[@"title"];
-    //[NSString stringWithFormat:@"row: %ld, section: %ld", indexPath.row, indexPath.section];
+    
+    cell.movieTitleLabel.text = movie[@"title"];
+    cell.movieDescriptionLabel.text = movie[@"overview"];
+    
+    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
+    NSString *posterURLString = [baseURLString stringByAppendingString:movie[@"poster_path"]];
+    NSURL *posterURL = [NSURL URLWithString:posterURLString];
+    cell.moviePosterView.image = nil;
+    [cell.moviePosterView setImageWithURL:posterURL];
     
     return cell;
 }
