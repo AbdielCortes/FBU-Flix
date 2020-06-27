@@ -33,6 +33,16 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
     [self.collectionView insertSubview:self.refreshControl atIndex:0];
+    
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
+    
+    layout.minimumInteritemSpacing = 3;
+    layout.minimumLineSpacing = 3;
+    
+    CGFloat postersPerRow = 3;
+    CGFloat posterWidth = (self.collectionView.frame.size.width - layout.minimumInteritemSpacing * (postersPerRow - 1)) / postersPerRow;
+    CGFloat posterHeight = posterWidth * 1.5;
+    layout.itemSize = CGSizeMake(posterWidth, posterHeight);
 }
 
 - (void)fetchMovies {
