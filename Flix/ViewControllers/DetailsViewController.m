@@ -30,6 +30,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSDictionary *monthConverter = @{
+        @"01" : @"January",
+        @"02" : @"February",
+        @"03" : @"March",
+        @"04" : @"April",
+        @"05" : @"May",
+        @"06" : @"June",
+        @"07" : @"July",
+        @"08" : @"August",
+        @"09" : @"September",
+        @"10" : @"October",
+        @"11" : @"November",
+        @"12" : @"December"
+    };
+    
+    NSDictionary *dayConverter = @{
+        @"01" : @"1",
+        @"02" : @"2",
+        @"03" : @"3",
+        @"04" : @"4",
+        @"05" : @"5",
+        @"06" : @"6",
+        @"07" : @"7",
+        @"08" : @"8",
+        @"09" : @"9",
+    };
+    
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     
     NSString *backdropURLString = [baseURLString stringByAppendingString:self.movie[@"backdrop_path"]];
@@ -43,7 +70,15 @@
     self.movieTitleLabel.text = self.movie[@"title"];
     [self.movieTitleLabel sizeToFit];
     
-    self.moviePremiereDateLabel.text = self.movie[@"release_date"];
+    NSString *rawDate = self.movie[@"release_date"];
+    NSArray *rawDateArray = [rawDate componentsSeparatedByString:@"-"];
+    NSString *year = rawDateArray[0];
+    NSString *month = monthConverter[rawDateArray[1]];
+    NSString *day = rawDateArray[2];
+    if ([dayConverter objectForKey:day] != nil) {
+        day = dayConverter[day];
+    }
+    self.moviePremiereDateLabel.text = [NSString stringWithFormat:@"%@ %@, %@", month, day, year];
     
     double voteAverage = [self.movie[@"vote_average"] doubleValue];
     self.movieRating.text = [NSString stringWithFormat:@"Rated %.1f/10", voteAverage];
