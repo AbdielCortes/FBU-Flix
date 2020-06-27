@@ -95,11 +95,11 @@
             </objects>
             <point key="canvasLocation" x="1178" y="-723"/>
         </scene>
-        <!--Item-->
+        <!--Categories-->
         <scene sceneID="4ZN-jY-DeY">
             <objects>
                 <navigationController id="9ho-xl-qV1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="xam-cW-QGj"/>
+                    <tabBarItem key="tabBarItem" title="Categories" image="projector_tabbar_item" id="xam-cW-QGj"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3I9-EA-W2U">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -112,7 +112,7 @@
             </objects>
             <point key="canvasLocation" x="2174" y="92"/>
         </scene>
-        <!--Movies Grid View Controller-->
+        <!--Categories-->
         <scene sceneID="wt0-f5-MZl">
             <objects>
                 <viewController id="JI2-bM-SwX" customClass="MoviesGridViewController" sceneMemberID="viewController">
@@ -148,6 +148,7 @@
                                         <size key="customSize" width="139" height="233"/>
                                         <connections>
                                             <outlet property="moviePosterView" destination="ICp-ah-NKI" id="xbS-HA-DAt"/>
+                                            <segue destination="vCB-gq-3Zq" kind="show" id="mFQ-IT-ctT"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -156,7 +157,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="rrZ-cC-Nde"/>
                     </view>
-                    <navigationItem key="navigationItem" id="MCP-4i-4UM"/>
+                    <navigationItem key="navigationItem" title="Categories" id="MCP-4i-4UM"/>
                     <connections>
                         <outlet property="collectionView" destination="PJq-Vy-wNN" id="Q3C-7O-giE"/>
                     </connections>
@@ -254,7 +255,11 @@
             <point key="canvasLocation" x="131.8840579710145" y="91.741071428571431"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="mFQ-IT-ctT"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="now_playing_tabbar_item" width="21" height="21"/>
+        <image name="projector_tabbar_item" width="21" height="25"/>
     </resources>
 </document>
