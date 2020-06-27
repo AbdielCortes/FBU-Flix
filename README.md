@@ -14,11 +14,11 @@ The following **required** functionality is complete:
 - [x] User sees a loading state while waiting for the movies API.
 - [x] User can pull to refresh the movie list.
 - [x] User sees an error message when there's a networking error.
-- [ ] User can tap a tab bar button to view a grid layout of Movie Posters using a CollectionView.
+- [x] User can tap a tab bar button to view a grid layout of Movie Posters using a CollectionView.
 
 The following **optional** features are implemented:
 
-- [ ] User can tap a poster in the collection view to see a detail screen of that movie
+- [x] User can tap a poster in the collection view to see a detail screen of that movie
 - [ ] User can search for a movie.
 - [ ] All images fade in as they are loading.
 - [ ] User can view the large movie poster by tapping on a cell.
@@ -30,23 +30,25 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [x] Show movie release date and rating in description view.
+- [x] Implemented pull up refresh in CollectionView.
+- [x] Implemented network error pop up in CollectionView.
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. How does the api network request work?
+2. How can we implement more features using what the api already provides us?
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://g.recordit.co/ETLSqYamLy.gif' width='' alt='Video Walkthrough' />
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+GIF created with [Recordit](https://recordit.co/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I has some issuses with how the outlet connections work under the hood, where I created an outled, then improperly changed its name and created a bunch of errors.
 
 ## Credits
 
