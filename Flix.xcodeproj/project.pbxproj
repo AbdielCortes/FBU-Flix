@@ -143,7 +143,6 @@
 		800750D424A505C5003F8D0C /* Flix */ = {
 			isa = PBXGroup;
 			children = (
-				8007510F24A537E2003F8D0C /* Models */,
 				8007510E24A537DA003F8D0C /* Views */,
 				8007510D24A537C7003F8D0C /* ViewControllers */,
 				800750D524A505C5003F8D0C /* AppDelegate.h */,
@@ -199,13 +198,6 @@
 				80838AB124A6BB3E001C7D90 /* MovieCollectionCell.m */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		8007510F24A537E2003F8D0C /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		E4405AE4B2A305C6A816557D /* Pods */ = {
