@@ -9,13 +9,14 @@
 #import "MoviesGridViewController.h"
 #import "MovieCollectionCell.h"
 #import "DetailsViewController.h"
+#import "Movie.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface MoviesGridViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic, strong) NSArray *movies;
+@property (nonatomic, strong) NSMutableArray *movies;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
@@ -68,7 +69,8 @@
        else {
            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
            
-           self.movies = dataDictionary[@"results"]; // stores data acuired from the api
+           NSArray *moviesDictionaries = dataDictionary[@"results"]; // stores data acuired from the api
+           self.movies = [Movie moviesWithDictionaries:moviesDictionaries];
            
            [self.collectionView reloadData]; // reloads collection view to make sure movies are displayed
        }
@@ -80,13 +82,7 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     MovieCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MovieCollectionCell" forIndexPath:indexPath];
     
-    NSDictionary *movie = self.movies[indexPath.item];
-      
-    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
-    NSString *posterURLString = [baseURLString stringByAppendingString:movie[@"poster_path"]];
-    NSURL *posterURL = [NSURL URLWithString:posterURLString];
-    cell.moviePosterView.image = nil;
-    [cell.moviePosterView setImageWithURL:posterURL];
+    cell.movie = self.movies[indexPath.item];
     
     return cell;
 }
@@ -103,7 +99,7 @@
     // Pass the selected object to the new view controller.
     UICollectionViewCell *tappedCell = sender;
     NSIndexPath *cellIndexPath = [self.collectionView indexPathForCell:tappedCell];
-    NSDictionary *movie = self.movies[cellIndexPath.row];
+    Movie *movie = self.movies[cellIndexPath.row];
     
     DetailsViewController *detailsViewController = [segue destinationViewController];
     detailsViewController.movie = movie;

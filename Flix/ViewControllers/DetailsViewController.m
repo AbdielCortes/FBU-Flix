@@ -32,24 +32,24 @@
     
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     
-    NSString *backdropURLString = [baseURLString stringByAppendingString:self.movie[@"backdrop_path"]];
+    NSString *backdropURLString = [baseURLString stringByAppendingString:self.movie.backdropUrlString];
     NSURL *backdropURL = [NSURL URLWithString:backdropURLString];
     [self.backdropView setImageWithURL:backdropURL];
     
-    NSString *posterURLString = [baseURLString stringByAppendingString:self.movie[@"poster_path"]];
+    NSString *posterURLString = [baseURLString stringByAppendingString:self.movie.posterUrlString];
     NSURL *posterURL = [NSURL URLWithString:posterURLString];
     [self.posterView setImageWithURL:posterURL];
     
-    self.movieTitleLabel.text = self.movie[@"title"];
+    self.movieTitleLabel.text = self.movie.title;
     [self.movieTitleLabel sizeToFit];
     
-    NSString *rawDate = self.movie[@"release_date"];
+    NSString *rawDate = self.movie.releaseDate;
     self.moviePremiereDateLabel.text = [self dateConverter:rawDate];
     
-    double voteAverage = [self.movie[@"vote_average"] doubleValue];
+    double voteAverage = [self.movie.rating doubleValue];
     self.movieRating.text = [NSString stringWithFormat:@"Rated %.1f/10", voteAverage];
     
-    self.movieDescriptionLabel.text = self.movie[@"overview"];
+    self.movieDescriptionLabel.text = self.movie.descriptionText;
     [self.movieDescriptionLabel sizeToFit];
 }
 
