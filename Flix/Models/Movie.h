@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *descriptionText;
 @property (nonatomic, strong) NSString *releaseDate;
-@property (nonatomic, strong) NSString *rating;
+@property (nonatomic, strong) NSNumber *rating;
 
 @property (nonatomic, strong) NSString *posterUrlString;
 @property (nonatomic, strong) NSString *backdropUrlString;
