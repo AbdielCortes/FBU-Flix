@@ -54,12 +54,6 @@
            if (error != nil) {
                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to Load Movies" message:@"The internet connection appears to be offline." preferredStyle:(UIAlertControllerStyleAlert)];
                 
-               // optional cancel action
-//                   UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
-//                        handler:^(UIAlertAction * _Nonnull action) { }];
-//                   // add the cancel action to the alertController
-//                   [alert addAction:cancelAction];
-
                // create an reload action
                UIAlertAction *reloadAction = [UIAlertAction actionWithTitle:@"Reload" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                    [self fetchMovies];
@@ -75,11 +69,7 @@
            else {
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                
-//               NSLog(@"%@", dataDictionary);
                self.movies = dataDictionary[@"results"]; // stores data acuired from the api
-//               for (NSDictionary *movie in self.movies) {
-//                   NSLog(@"%@", movie[@"title"]);
-//               }
                
                [self.collectionView reloadData]; // reloads collection view to make sure movies are displayed
            }
