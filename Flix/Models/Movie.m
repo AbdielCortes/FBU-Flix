@@ -14,7 +14,8 @@
     self = [super init];
     
     self.title = dictionary[@"title"];
-    self.description = dictionary[@"overview"];
+    self.descriptionText = dictionary[@"overview"];
+//    self.description = @"-";
     self.releaseDate = dictionary[@"release_date"];
     self.rating = dictionary[@"vote_average"];
     
@@ -25,14 +26,14 @@
 }
 
 // creates an array of Movies from an array of dictionaries
-+ (NSArray *)moviesWithDictionaries:(NSArray *)dictionaries {
-    NSMutableArray *movies;
++ (NSMutableArray *)moviesWithDictionaries:(NSArray *)dictionaries {
+    NSMutableArray *movies = [[NSMutableArray alloc] init];
 
     for (NSDictionary *movieDictionary in dictionaries) {
-        [movies addObject:[[Movie init] initWithDictionary:movieDictionary]];
+        NSLog(@"%@", movieDictionary);
+        [movies addObject:[[Movie alloc] initWithDictionary:movieDictionary]];
     }
-    
-    //NSArray *result = [movies copy];
+
     return movies;
 }
 
