@@ -15,7 +15,6 @@
     
     self.title = dictionary[@"title"];
     self.descriptionText = dictionary[@"overview"];
-//    self.description = @"-";
     self.releaseDate = dictionary[@"release_date"];
     self.rating = dictionary[@"vote_average"];
     
@@ -30,7 +29,6 @@
     NSMutableArray *movies = [[NSMutableArray alloc] init];
 
     for (NSDictionary *movieDictionary in dictionaries) {
-        NSLog(@"%@", movieDictionary);
         [movies addObject:[[Movie alloc] initWithDictionary:movieDictionary]];
     }
 

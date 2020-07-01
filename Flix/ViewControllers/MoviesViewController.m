@@ -80,15 +80,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
     
-    Movie *movie = self.movies[indexPath.row];
-    cell.movieTitleLabel.text = movie.title;
-    cell.movieDescriptionLabel.text = movie.descriptionText;
-    
-    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
-    NSString *posterURLString = [baseURLString stringByAppendingString:movie.posterUrlString];
-    NSURL *posterURL = [NSURL URLWithString:posterURLString];
-    cell.moviePosterView.image = nil;
-    [cell.moviePosterView setImageWithURL:posterURL];
+    cell.movie = self.movies[indexPath.row];
     
     return cell;
 }
