@@ -51,28 +51,27 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-           if (error != nil) {
-               UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to Load Movies" message:@"The internet connection appears to be offline." preferredStyle:(UIAlertControllerStyleAlert)];
+
+        if (error != nil && error.code == NSURLErrorNotConnectedToInternet) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to Load Movies" message:@"The internet connection appears to be offline." preferredStyle:(UIAlertControllerStyleAlert)];
                 
-               // create an reload action
-               UIAlertAction *reloadAction = [UIAlertAction actionWithTitle:@"Reload" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                   [self fetchMovies];
-               }];
-               // add the reload action to the alert controller
-               [alert addAction:reloadAction];
-               
-               // show alert box
-               [self presentViewController:alert animated:YES completion:^{ }];
-               
-               NSLog(@"%@", [error localizedDescription]);
+           // create an reload action
+           UIAlertAction *reloadAction = [UIAlertAction actionWithTitle:@"Reload" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+               [self fetchMovies];
+           }];
+           // add the reload action to the alert controller
+           [alert addAction:reloadAction];
+           
+           // show alert box
+           [self presentViewController:alert animated:YES completion:^{ }];
            }
-           else {
-               NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-               
-               self.movies = dataDictionary[@"results"]; // stores data acuired from the api
-               
-               [self.collectionView reloadData]; // reloads collection view to make sure movies are displayed
-           }
+       else {
+           NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+           
+           self.movies = dataDictionary[@"results"]; // stores data acuired from the api
+           
+           [self.collectionView reloadData]; // reloads collection view to make sure movies are displayed
+       }
         [self.refreshControl endRefreshing];
        }];
     [task resume];

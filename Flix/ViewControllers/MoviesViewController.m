@@ -33,7 +33,6 @@
     
     [self.activityIndicator startAnimating];
     [self fetchMovies];
-    [self.activityIndicator stopAnimating];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
@@ -46,7 +45,8 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-           if (error != nil) {
+        
+           if (error != nil && error.code == NSURLErrorNotConnectedToInternet) {
                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to Load Movies" message:@"The internet connection appears to be offline." preferredStyle:(UIAlertControllerStyleAlert)];
 
                // create an reload action
@@ -58,8 +58,6 @@
                
                // show alert box
                [self presentViewController:alert animated:YES completion:^{ }];
-               
-               NSLog(@"%@", [error localizedDescription]);
            }
            else {
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
@@ -69,6 +67,7 @@
                [self.tableView reloadData]; // reloads table view to make sure movies are displayed
            }
             [self.refreshControl endRefreshing];
+            [self.activityIndicator stopAnimating];
            }];
         [task resume];
 }
