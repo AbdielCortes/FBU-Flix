@@ -10,6 +10,7 @@
 #import "MovieCollectionCell.h"
 #import "DetailsViewController.h"
 #import "Movie.h"
+#import "MovieApiManager.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface MoviesGridViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -30,10 +31,10 @@
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
-    [self fetchMovies];
+    [self getCollectionData];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(getCollectionData) forControlEvents:UIControlEventValueChanged];
     [self.collectionView insertSubview:self.refreshControl atIndex:0];
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
@@ -47,36 +48,28 @@
     layout.itemSize = CGSizeMake(posterWidth, posterHeight);
 }
 
-- (void)fetchMovies {
-    NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+- (void)getCollectionData {
+    MovieApiManager *manager = [MovieApiManager new];
+   [manager fetchNowPlaying:^(NSMutableArray *movies, NSError *error) {
+       if (error != nil && error.code == NSURLErrorNotConnectedToInternet) {
+           UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to Load Movies" message:@"The internet connection appears to be offline." preferredStyle:(UIAlertControllerStyleAlert)];
 
-        if (error != nil && error.code == NSURLErrorNotConnectedToInternet) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to Load Movies" message:@"The internet connection appears to be offline." preferredStyle:(UIAlertControllerStyleAlert)];
-                
            // create an reload action
            UIAlertAction *reloadAction = [UIAlertAction actionWithTitle:@"Reload" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-               [self fetchMovies];
+               [self getCollectionData];
            }];
            // add the reload action to the alert controller
            [alert addAction:reloadAction];
            
            // show alert box
            [self presentViewController:alert animated:YES completion:^{ }];
-           }
-       else {
-           NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-           
-           NSArray *moviesDictionaries = dataDictionary[@"results"]; // stores data acuired from the api
-           self.movies = [Movie moviesWithDictionaries:moviesDictionaries];
-           
-           [self.collectionView reloadData]; // reloads collection view to make sure movies are displayed
        }
-        [self.refreshControl endRefreshing];
-       }];
-    [task resume];
+       else {
+           self.movies = movies;
+           [self.collectionView reloadData]; // reloads collection view to make sure movies are displayed
+           [self.refreshControl endRefreshing];
+       }
+   }];
 }
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
